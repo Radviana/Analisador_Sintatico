@@ -1,0 +1,17 @@
+1.2Ae-7
+R$12.00
+"string"
+'''comentário em bloco'''
+#comentário de linha
+(
+,
+)
+programa
+fim_programa
+se
+senao
+entao
+imprima
+leia
+enquanto
+1
