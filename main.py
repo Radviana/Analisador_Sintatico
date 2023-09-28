@@ -27,7 +27,13 @@ with open("ex1.cic", "r") as code:
         for i in line:
             lista.append(i)
 
-for i in range(len(lista)):
+i=0
+while (True):
+    if i==len(lista):
+        break
+
+    #for i in range(len(lista)):
+    #print(palavra)
     ShowState()
     if estado == 0 and (lista[i] in token_hex or lista[i] in token_dec):
         estado = 1
@@ -48,7 +54,7 @@ for i in range(len(lista)):
     elif estado == 0 and (lista[i] == ","):
         estado = 31
     elif estado == 0 and lista[i] in token_alf_min:
-        palavra = palavra + (lista[i])
+        #palavra = palavra + (lista[i])
         estado = 32
     
     if estado == 1 and (lista[i] in token_hex or lista[i] in token_dec):
@@ -177,25 +183,31 @@ for i in range(len(lista)):
         print("TK_DLMT_VIRG")
         estado = 0
 
-    if estado == 32 and (lista[i] in token_alf_min or lista[i] == "_"):
-        palavra = palavra + (lista[i])
-    elif estado == 32 and palavra == "programa":
-        estado = 33
-    elif estado == 32 and palavra == "fim_programa":
-        estado = 34
-    elif estado == 32 and palavra == "se":
-        estado = 35
-    elif estado == 32 and palavra == "senao":
-        estado = 36
-    elif estado == 32 and palavra == "entao":
-        estado = 37
-    elif estado == 32 and palavra == "imprima":
-        estado = 38
-    elif estado == 32 and palavra == "leia":
-        estado = 39
-    elif estado == 32 and palavra == "enquanto":
-        estado = 40
-    
+    if estado == 32:
+        if (lista[i] in token_alf_min or lista[i] == "_"):
+            palavra = palavra + (lista[i])
+            print(palavra)
+        else:
+            estado = 0
+            i-=1
+
+        if palavra == "programa":
+            estado = 33
+        elif palavra == "fim_programa":
+            estado = 34
+        elif  palavra == "se":
+            estado = 35
+        elif palavra == "senao":
+            estado = 36
+        elif palavra == "entao":
+            estado = 37
+        elif palavra == "imprima":
+            estado = 38
+        elif palavra == "leia":
+            estado = 39
+        elif palavra == "enquanto":
+            estado = 40
+
     if estado == 33:
         print("TK_PROGRAMA")
         palavra = ""
@@ -235,5 +247,7 @@ for i in range(len(lista)):
         print("TK_ENQUANTO")
         palavra = ""
         estado = 0
+
+    i+=1
 
 code.close()
