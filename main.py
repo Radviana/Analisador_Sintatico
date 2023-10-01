@@ -3,14 +3,6 @@ token_dec = "1236567890"
 token_hex = "ABCDEF"
 token_alf_mai = "GHIJKLMNOPQRSTUVWXYZ"
 token_alf_min = "abcdefghijklmnopqrstuvwxyz"
-token_programa = "programa"
-token_fim_programa = "fim_programa"
-token_se = "se"
-token_senao = "senao"
-token_entao = "entao"
-token_imprima = "imprima"
-token_leia = "leia"
-token_enquanto = "enquanto"
 
 global estado, palavra
 estado = 0
@@ -19,7 +11,7 @@ palavra = ""
 def ShowState():
     print("estado: ", estado, "lista: ", lista[i])
 
-with open("ex1.cic", "r") as code:
+with open("ex1.txt", "r") as code:
     arquivo = code.readlines()
     lista = []
     for linha in arquivo:
@@ -31,17 +23,14 @@ i=0
 while (True):
     if i==len(lista):
         break
-
-    #for i in range(len(lista)):
-    #print(palavra)
-    ShowState()
+    #ShowState()
     if estado == 0 and (lista[i] in token_hex or lista[i] in token_dec):
         estado = 1
     elif estado == 0 and lista[i] in token_alf_mai:
         estado = 8
     elif estado == 0 and lista[i] == '"':
         estado = 14
-    elif estado == 0 and lista[i] == '<':
+    elif estado == 0 and lista[i] == "<":
         estado = 17
     elif estado == 0 and lista[i] == "'":
         estado = 20
@@ -54,8 +43,29 @@ while (True):
     elif estado == 0 and (lista[i] == ","):
         estado = 31
     elif estado == 0 and lista[i] in token_alf_min:
-        #palavra = palavra + (lista[i])
         estado = 32
+    elif estado == 0 and lista[i] == "!":
+        estado = 41
+    elif estado == 0 and lista[i] == "=":
+        estado = 42
+    elif estado == 0 and lista[i] == ">":
+        estado = 43
+    elif estado == 0 and lista[i] == ":":
+        estado = 44
+    elif estado == 0 and lista[i] == "~":
+        estado = 45
+    elif estado == 0 and lista[i] == "+":
+        estado = 46
+    elif estado == 0 and lista[i] == "-":
+        estado = 47
+    elif estado == 0 and lista[i] == "*":
+        estado = 48
+    elif estado == 0 and lista[i] == "/":
+        estado = 49
+    elif estado == 0 and lista[i] == "&":
+        estado = 50
+    elif estado == 0 and lista[i] == "|":
+        estado = 51
     
     if estado == 1 and (lista[i] in token_hex or lista[i] in token_dec):
         estado = 1
@@ -126,12 +136,19 @@ while (True):
         print("TK_CADEIA")
         estado = 0
 
-    if estado == 17 and lista[i] in token_alf_min:
-        estado = 18
+    if estado == 17:
+        if lista[i] in token_alf_min:
+            estado = 18
+        if lista[i] == "=":
+            print("TK_MENOR_IGUAL")
+            estado = 0
+        #elif lista[i] not in token_alf_min or lista[i] != "=":
+        #    print("TK_MENOR")
+        #    estado = 0
 
     if estado == 18 and (lista[i] in token_alf_min or lista[i] in token_dec):
         estado = 18
-    if estado == 18 and lista[i] == '>':
+    if estado == 18 and lista[i] == ">":
         estado = 19
 
     if estado == 19:
@@ -184,9 +201,8 @@ while (True):
         estado = 0
 
     if estado == 32:
-        if (lista[i] in token_alf_min or lista[i] == "_"):
+        if lista[i] in token_alf_min or lista[i] == "_":
             palavra = palavra + (lista[i])
-            print(palavra)
         else:
             estado = 0
             i-=1
@@ -246,6 +262,54 @@ while (True):
     if estado == 40:
         print("TK_ENQUANTO")
         palavra = ""
+        estado = 0
+
+    if estado == 41 and lista[i] == "=":
+        print("TK_DIFERENTE")
+        estado = 0
+
+    if estado == 42:
+        print("TK_IGUAL")
+        estado = 0
+
+    if estado == 43:
+        if lista[i] == "=":
+            print("TK_MAIOR_IGUAL")
+            estado = 0
+        #else:
+        #    print("TK_MAIOR")
+        #    estado = 0
+
+    if estado == 44 and lista[i] == "=":
+        print("TK_ATRIBUIÇÃO")
+        estado = 0
+
+    if estado == 45:
+        print("TK_NEGAÇÃO")
+        estado = 0
+
+    if estado == 46:
+        print("TK_ADIÇÃO")
+        estado = 0
+
+    if estado == 47:
+        print("TK_SUBTRAÇÃO")
+        estado = 0
+
+    if estado == 48:
+        print("TK_MULTIPLICAÇÃO")
+        estado = 0
+
+    if estado == 49:
+        print("TK_DIVISÃO")
+        estado = 0
+        
+    if estado == 50:
+        print("TK_CONJUNÇÃO")
+        estado = 0
+
+    if estado == 51:
+        print("TK_DISJUNÇÃO")
         estado = 0
 
     i+=1
