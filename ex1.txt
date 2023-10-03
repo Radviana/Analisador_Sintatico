@@ -12,6 +12,3 @@ se
 senao
 entao
 imprima
-leia
-enquanto
-1
