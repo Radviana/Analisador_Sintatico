@@ -11,7 +11,6 @@ def ler_arquivo(arq: str) -> list:
 
     return lista
 
-
 if __name__ == "__main__":
     lista = ler_arquivo(extras.arquivo)
 
@@ -384,4 +383,6 @@ if __name__ == "__main__":
                 i -= 1
         i += 1
 
-extras.PrintResults()
+    somatorio = extras.PrintSomatorio()
+    with open("Somatorio_Tokens.txt", "w") as somatorio_tokens:
+        somatorio_tokens.write(str(somatorio))
