@@ -12,3 +12,7 @@ se
 senao
 entao
 imprima
+>
+>=
+<teste>
+<teste>
